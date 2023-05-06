@@ -18,5 +18,6 @@
         Set load_balance_server as load balance server's IP.
         Set current_server as the server's own IP.
     5. Run server.py
-    6. Run client.py on local computer. Or, run test file locally. 
+    6. On the local computer, modify load_balance_server in the config.py file to load balance server's IP.
+    7. Run client.py on local computer. Or, run test file locally. 
         
