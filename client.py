@@ -165,23 +165,29 @@ def main(roomid, url):
     p_thread.join()
     sio.disconnect()
 
-if __name__ == '__main__':
-    status=input("1 for create, 2 for join")
-    if status==1:
-        get_server_url="http://"+load_balance_server+":5001/createRoom"
-        server_info=requests.get(get_server_url)
-        server_ip=server_info["ip"]
-        server_port=server_info["port"]
-        server="http://"+server_ip+":"+server_port
-        print("server:", server)
-        ask_for_room="http://"+server_ip+"/createRoom"
-        room_info=requests.get(ask_for_room)
-        if room_info["CODE"]==0:
-            print("no room")
-            exit()
+def get_info():
+    status = input("1 for create, 2 for join")
+    if status == 1:
+        get_server_url = "http://" + load_balance_server + ":5001/createRoom"
+        server_data = requests.get(get_server_url).json()
+        if server_data["ip"] != "":
+            server_url = server_data["ip"] + ":" + str(server_data["port"])
+            print(server_url)
         else:
-            room_id=room_info["ROOMID"]
+            print("No server found")
+            server_url = ""
+        room_data = requests.get("http://" + server_url + "/" + "createRoom").json()
+        if room_data["CODE"] == 1:
+            room_id = room_data["ROOMID"]
+            print("room id: ", room_id)
+        else:
+            print("No room")
+            room_id = 0
     else:
-        server=input("server: ")
-        room_id=int(input("room id:"))
+        server = input("server: ")
+        room_id = int(input("room id:"))
+    return server, room_id
+
+if __name__ == '__main__':
+    server, room_id=get_info()
     main(room_id, server)
