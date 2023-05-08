@@ -7,7 +7,8 @@ import uuid
 import requests
 import json
 from threading import Thread
-url="http://172.31.1.34:9001"
+from config import current_server
+url="http://"+current_server+":9001"
 sio=socketio.Client(reconnection_attempts=5)
 
 

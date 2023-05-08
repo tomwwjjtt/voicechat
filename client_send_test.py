@@ -6,9 +6,10 @@ import uuid
 import requests
 from threading import Thread
 # import matplotlib.pyplot as plt
+from config import current_server
 
 SERVER_URL = "http://ec2-54-144-247-45.compute-1.amazonaws.com:5001/createRoom"
-url="http://172.31.1.34:9001"
+url="http://"+current_server+":9001"
 connect_time=[]
 
 
